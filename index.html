@@ -9,108 +9,149 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
+            color: #333;
         }
+        
+        /* Header */
         header {
-            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ff6600;
+            padding: 15px 20px;
             color: white;
-            padding: 20px;
-            text-align: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 50px;
+            margin-right: 10px;
+        }
+        .logo h1 {
+            margin: 0;
             font-size: 24px;
         }
-        nav {
-            background-color: #333;
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-        }
-        nav a {
+
+        /* Navigation Menu */
+        .menu-btn {
+            font-size: 24px;
+            background: none;
+            border: none;
             color: white;
+            cursor: pointer;
+            display: block;
+        }
+        .menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .menu a {
+            display: block;
+            padding: 12px 20px;
             text-decoration: none;
-            padding: 14px 20px;
-            margin: 0 10px;
+            color: #333;
             transition: 0.3s;
         }
-        nav a:hover {
-            background-color: #f4b400;
-            color: black;
-            border-radius: 5px;
+        .menu a:hover {
+            background-color: #ff6600;
+            color: white;
         }
+
+        /* Hero Section */
         .hero {
             text-align: center;
-            padding: 50px;
-            background-color: #f4b400;
+            padding: 80px 20px;
+            background: url('https://source.unsplash.com/1600x600/?technology,ai') no-repeat center center/cover;
             color: white;
-            font-size: 26px;
-            font-weight: bold;
+            font-size: 28px;
         }
-        .container {
+
+        /* Content */
+        .content {
+            padding: 40px;
             max-width: 1100px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
+            margin: auto;
         }
-        .services {
-            display: flex;
-            justify-content: space-between;
-            text-align: center;
-        }
-        .service-box {
-            width: 30%;
-            padding: 20px;
-            background: #f4f4f4;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            transition: 0.3s;
-        }
-        .service-box:hover {
-            background: #f4b400;
-            color: white;
-        }
+
+        /* Footer */
         footer {
-            background-color: #222;
+            background-color: #ff6600;
             color: white;
             text-align: center;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 15px;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
+
+    <!-- Header -->
     <header>
-        PhoenixGPT - AI Solutions
-    </header>
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#services">Services</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-    </nav>
-    <div class="hero">
-        Transforming Businesses with AI-Powered Solutions
-    </div>
-    <div class="container" id="services">
-        <h2>Our Services</h2>
-        <div class="services">
-            <div class="service-box">
-                <h3>AI Consulting</h3>
-                <p>We help businesses integrate AI for better decision-making.</p>
-            </div>
-            <div class="service-box">
-                <h3>Automation</h3>
-                <p>Automate processes and improve efficiency with our AI solutions.</p>
-            </div>
-            <div class="service-box">
-                <h3>Custom AI Models</h3>
-                <p>Develop AI models tailored to your business needs.</p>
-            </div>
+        <div class="logo">
+            <img src="https://via.placeholder.com/50" alt="PhoenixGPT Logo">
+            <h1>PhoenixGPT</h1>
         </div>
+        <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+        <div class="menu" id="menu">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#blog">Blog</a>
+            <a href="#chatbots">Chatbots</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="hero" id="home">
+        <h2>Innovative AI Solutions for the Future</h2>
+        <p>Empowering businesses with intelligent automation.</p>
     </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <h2 id="about">About Us</h2>
+        <p>PhoenixGPT is a leading AI solutions provider, offering cutting-edge technology to automate processes and enhance efficiency for businesses worldwide.</p>
+
+        <h2 id="blog">Blog</h2>
+        <p>Stay updated with the latest AI trends, insights, and innovations from PhoenixGPT.</p>
+
+        <h2 id="chatbots">Our Chatbots</h2>
+        <p>Explore our AI-powered chatbots designed to improve customer engagement and automate workflows.</p>
+    </div>
+
+    <!-- Footer -->
     <footer>
-        &copy; 2025 PhoenixGPT | All Rights Reserved
+        <p>&copy; 2025 PhoenixGPT | AI Solutions</p>
     </footer>
+
+    <!-- JavaScript for Menu -->
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener("click", function(event) {
+            var menu = document.getElementById("menu");
+            var button = document.querySelector(".menu-btn");
+            if (event.target !== menu && event.target !== button) {
+                menu.style.display = "none";
+            }
+        });
+    </script>
+
 </body>
 </html>
-
