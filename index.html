@@ -10,8 +10,8 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #0f1d57; /* Deep Blue Background */
-            color: white; /* White text for better contrast */
+            background-color: #f4f4f4;
+            color: #333;
         }
         
         /* Header */
@@ -76,13 +76,6 @@
             font-size: 28px;
         }
 
-        /* Content */
-        .content {
-            padding: 40px;
-            max-width: 1100px;
-            margin: auto;
-        }
-
         /* Footer */
         footer {
             background-color: #ff6600;
@@ -103,29 +96,17 @@
         </div>
         <button class="menu-btn" onclick="toggleMenu()">⋮</button>
         <div class="menu" id="menu">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#blog">Blog</a>
-            <a href="#chatbots">Chatbots</a>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="blog.html">Blog</a>
+            <a href="chatbots.html">Chatbots</a>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <div class="hero" id="home">
+    <div class="hero">
         <h2>Uncover AI secrets and innovations!</h2>
         <p>Your go-to guide for AI insights.</p>
-    </div>
-
-    <!-- Main Content -->
-    <div class="content">
-        <h2 id="about">About Us</h2>
-        <p>PhoenixGPT is a leading AI solutions provider, offering cutting-edge technology to automate processes and enhance efficiency for businesses worldwide.</p>
-
-        <h2 id="blog">Blog</h2>
-        <p>Stay updated with the latest AI trends, insights, and innovations from PhoenixGPT.</p>
-
-        <h2 id="chatbots">Our Chatbots</h2>
-        <p>Explore our AI-powered chatbots designed to improve customer engagement and automate workflows.</p>
     </div>
 
     <!-- Footer -->
@@ -144,7 +125,6 @@
             }
         }
 
-        // Close menu when clicking outside
         document.addEventListener("click", function(event) {
             var menu = document.getElementById("menu");
             var button = document.querySelector(".menu-btn");
@@ -156,4 +136,5 @@
 
 </body>
 </html>
+
 
