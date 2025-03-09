@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author - PhoenixGPT</title>
+    <link rel="icon" type="image/png" href="PhoenixGPT logo.jpeg">
+    <script type="module" src="firebase.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #0f1d57;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Author Login</h2>
+        <input type="email" id="email" placeholder="Enter email">
+        <input type="password" id="password" placeholder="Enter password">
+        <button onclick="signIn()">Sign In</button>
+        <p id="message"></p>
+    </div>
+
+    <script type="module">
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+        import { firebaseConfig } from "./firebase.js";
+        
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        window.signIn = function() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const message = document.getElementById("message");
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    message.textContent = "Login successful! Redirecting...";
+                    setTimeout(() => {
+                        window.location.href = "create_post.html";
+                    }, 2000);
+                })
+                .catch((error) => {
+                    message.textContent = "Error: " + error.message;
+                });
+        }
+    </script>
+</body>
+</html>
