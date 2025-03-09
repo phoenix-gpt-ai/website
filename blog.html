@@ -68,19 +68,28 @@
         }
 
         /* Blog Section */
-        .blog-section {
+        .blog-container {
             padding: 40px;
             max-width: 1100px;
             margin: auto;
         }
         .blog-post {
-            background: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.1);
             padding: 20px;
-            margin-bottom: 20px;
             border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
         }
         .blog-post h2 {
+            margin: 0;
             color: #ffcc00;
+        }
+        .blog-post p {
+            margin: 10px 0 0;
+            display: none;
+        }
+        .blog-post.expanded p {
+            display: block;
         }
 
         /* Footer */
@@ -90,6 +99,21 @@
             text-align: center;
             padding: 15px;
             margin-top: 30px;
+        }
+
+        /* Add Post Button */
+        .add-post-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff6600;
+            color: white;
+            font-size: 24px;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -111,28 +135,20 @@
     </header>
 
     <!-- Blog Section -->
-    <div class="blog-section">
-        <h1>AI News & Updates</h1>
-        <div class="blog-post">
-            <h2>Breakthrough in AI: New Model Surpasses Human Accuracy</h2>
-            <p>Researchers have developed a new AI model that achieves human-level understanding in text and image recognition...</p>
-        </div>
-        <div class="blog-post">
-            <h2>AI in Healthcare: Revolutionizing Diagnosis</h2>
-            <p>AI-powered systems are helping doctors detect diseases at an early stage, improving patient outcomes...</p>
-        </div>
-        <div class="blog-post">
-            <h2>Chatbots: The Future of Customer Support</h2>
-            <p>More businesses are adopting AI-driven chatbots to enhance customer service experiences...</p>
-        </div>
+    <div class="blog-container" id="blog-container">
+        <h2>AI News and Updates</h2>
+        <!-- Blog posts will be dynamically loaded here -->
     </div>
+
+    <!-- Add Post Button -->
+    <button class="add-post-btn" onclick="goToAuthorPage()">+</button>
 
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 PhoenixGPT </p>
     </footer>
 
-    <!-- JavaScript for Menu -->
+    <!-- JavaScript for Menu and Blog -->
     <script>
         function toggleMenu() {
             var menu = document.getElementById("menu");
@@ -150,7 +166,31 @@
                 menu.style.display = "none";
             }
         });
-    </script>
 
+        function goToAuthorPage() {
+            window.location.href = "author.html";
+        }
+
+        function loadBlogs() {
+            fetch("get_blogs.php")
+                .then(response => response.json())
+                .then(data => {
+                    const blogContainer = document.getElementById("blog-container");
+                    blogContainer.innerHTML = '<h2>AI News and Updates</h2>';
+                    data.forEach(post => {
+                        let postElement = document.createElement("div");
+                        postElement.classList.add("blog-post");
+                        postElement.innerHTML = `<h2>${post.title}</h2><p>${post.content}</p>`;
+                        postElement.addEventListener("click", function() {
+                            postElement.classList.toggle("expanded");
+                        });
+                        blogContainer.appendChild(postElement);
+                    });
+                });
+        }
+
+        loadBlogs();
+    </script>
 </body>
 </html>
+
