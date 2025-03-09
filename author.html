@@ -13,56 +13,137 @@
             padding: 0;
             background-color: #0f1d57;
             color: white;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #ff6600;
+            padding: 15px 20px;
+            color: white;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            width: 50px;
+            margin-right: 10px;
+        }
+        .logo h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Login Section */
+        .auth-container {
             text-align: center;
+            padding: 40px;
         }
-        .container {
-            max-width: 400px;
-            margin: 100px auto;
+        input {
+            padding: 10px;
+            margin: 10px;
+            width: 250px;
+        }
+        button {
+            padding: 10px;
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* Blog Form */
+        .blog-form {
+            display: none;
+            text-align: center;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
         }
-        input, button {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
+        .blog-form textarea {
+            width: 80%;
+            height: 100px;
+            margin-top: 10px;
             padding: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="PhoenixGPT logo.jpeg">
+            <h1>PhoenixGPT</h1>
+        </div>
+    </header>
+
+    <!-- Authentication Section -->
+    <div class="auth-container" id="auth-container">
         <h2>Author Login</h2>
-        <input type="email" id="email" placeholder="Enter email">
-        <input type="password" id="password" placeholder="Enter password">
-        <button onclick="signIn()">Sign In</button>
-        <p id="message"></p>
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="signIn()">Login</button>
+        <p id="auth-message"></p>
+    </div>
+
+    <!-- Blog Form -->
+    <div class="blog-form" id="blog-form">
+        <h2>Create a Blog Post</h2>
+        <input type="text" id="blog-title" placeholder="Blog Title">
+        <textarea id="blog-content" placeholder="Write your blog here..."></textarea>
+        <button onclick="postBlog()">Post</button>
     </div>
 
     <script type="module">
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
-        import { firebaseConfig } from "./firebase.js";
-        
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
-        window.signIn = function() {
+        function signIn() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
-            const message = document.getElementById("message");
-
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
-                    message.textContent = "Login successful! Redirecting...";
-                    setTimeout(() => {
-                        window.location.href = "create_post.html";
-                    }, 2000);
+                    document.getElementById("auth-message").innerText = "Login successful!";
+                    document.getElementById("auth-container").style.display = "none";
+                    document.getElementById("blog-form").style.display = "block";
                 })
                 .catch((error) => {
-                    message.textContent = "Error: " + error.message;
+                    document.getElementById("auth-message").innerText = "Login failed: " + error.message;
                 });
+        }
+
+        async function postBlog() {
+            const title = document.getElementById("blog-title").value;
+            const content = document.getElementById("blog-content").value;
+            if (title && content) {
+                await addDoc(collection(db, "blogs"), {
+                    title: title,
+                    content: content,
+                    timestamp: new Date()
+                });
+                alert("Blog posted successfully!");
+                window.location.href = "blog.html";
+            } else {
+                alert("Please fill in all fields");
+            }
         }
     </script>
 </body>
 </html>
+
