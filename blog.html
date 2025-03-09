@@ -135,16 +135,6 @@
         </div>
     </header>
 
-    <!-- Login Section -->
-    <div id="login-section">
-        <input type="email" id="email" placeholder="Enter Email">
-        <input type="password" id="password" placeholder="Enter Password">
-        <button onclick="login()">Login</button>
-        <button onclick="logout()">Logout</button>
-    </div>
-
-    <p id="login-status"></p>
-
     <!-- Blog Section -->
     <div class="blog-container" id="blog-container">
         <h2>AI News and Updates</h2>
@@ -161,8 +151,6 @@
 
     <!-- JavaScript for Menu and Blog -->
     <script type="module">
-        import { auth, signInWithEmailAndPassword, signOut } from "./firebase.js";
-
         function toggleMenu() {
             var menu = document.getElementById("menu");
             menu.style.display = menu.style.display === "block" ? "none" : "block";
@@ -179,23 +167,8 @@
         function goToAuthorPage() {
             window.location.href = "author.html";
         }
-
-        async function login() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                document.getElementById("login-status").innerText = "Logged in successfully!";
-            } catch (error) {
-                document.getElementById("login-status").innerText = "Login failed: " + error.message;
-            }
-        }
-
-        async function logout() {
-            await signOut(auth);
-            document.getElementById("login-status").innerText = "Logged out!";
-        }
     </script>
 </body>
 </html>
+
 
