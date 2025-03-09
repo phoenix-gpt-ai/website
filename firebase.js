@@ -1,6 +1,7 @@
 // Import Firebase SDK (only works in modules or bundled setups)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -15,6 +16,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app); // Firestore database
 
-// Export authentication functions
-export { auth, signInWithEmailAndPassword, signOut };
+// Export authentication and database
+export { auth, db, signInWithEmailAndPassword, signOut };
+
