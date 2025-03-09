@@ -84,7 +84,7 @@
         <h2>Author Login</h2>
         <input type="email" id="email" placeholder="Enter Email">
         <input type="password" id="password" placeholder="Enter Password">
-        <button id="login-btn">Login</button>
+        <button id="loginBtn">Login</button>
         <p id="auth-message"></p>
     </div>
 
@@ -93,15 +93,14 @@
         <h2>Create a Blog Post</h2>
         <input type="text" id="blog-title" placeholder="Blog Title">
         <textarea id="blog-content" placeholder="Write your blog here..."></textarea>
-        <button id="post-btn">Post</button>
+        <button id="postBtn">Post</button>
     </div>
 
     <script type="module">
-        import { auth, db } from "./firebase.js";
-        import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { auth, db, signInWithEmailAndPassword } from "./firebase.js";
         import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        document.getElementById("login-btn").addEventListener("click", function() {
+        document.getElementById("loginBtn").addEventListener("click", function() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
             console.log("Attempting login for", email);
@@ -119,7 +118,7 @@
                 });
         });
 
-        document.getElementById("post-btn").addEventListener("click", async function() {
+        document.getElementById("postBtn").addEventListener("click", async function() {
             const title = document.getElementById("blog-title").value;
             const content = document.getElementById("blog-content").value;
             if (title && content) {
@@ -138,6 +137,7 @@
     </script>
 </body>
 </html>
+
 
 
 
