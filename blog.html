@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - PhoenixGPT</title>
+    <title>Blogs - PhoenixGPT</title>
     <link rel="icon" type="image/png" href="PhoenixGPT logo.jpeg">
     <script type="module" src="firebase.js"></script>
     <style>
@@ -14,7 +14,7 @@
             background-color: #0f1d57;
             color: white;
         }
-        
+
         /* Header */
         header {
             display: flex;
@@ -37,87 +37,40 @@
             font-size: 24px;
         }
 
-        /* Navigation Menu */
-        .menu-btn {
-            font-size: 24px;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            display: block;
-        }
-        .menu {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .menu a {
-            display: block;
-            padding: 12px 20px;
-            text-decoration: none;
-            color: #333;
-            transition: 0.3s;
-        }
-        .menu a:hover {
-            background-color: #ff6600;
-            color: white;
-        }
-
-        /* Blog Section */
+        /* Blog List */
         .blog-container {
-            padding: 40px;
-            max-width: 1100px;
-            margin: auto;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
         }
         .blog-post {
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            cursor: pointer;
+            background: white;
+            color: black;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
         }
         .blog-post h2 {
             margin: 0;
-            color: #ffcc00;
+            cursor: pointer;
         }
-        .blog-post p {
-            margin: 10px 0 0;
+        .blog-content {
             display: none;
+            margin-top: 10px;
         }
-        .blog-post.expanded p {
+        .add-button {
             display: block;
-        }
-
-        /* Footer */
-        footer {
+            width: 50px;
+            height: 50px;
             background-color: #ff6600;
             color: white;
-            text-align: center;
-            padding: 15px;
-            margin-top: 30px;
-        }
-
-        /* Add Post Button */
-        .add-post-btn {
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #ff6600;
-            color: white;
-            font-size: 24px;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
             cursor: pointer;
-            text-align: center;
-            line-height: 50px;
-            text-decoration: none;
         }
     </style>
 </head>
@@ -127,48 +80,52 @@
     <header>
         <div class="logo">
             <img src="PhoenixGPT logo.jpeg">
-            <h1>PhoenixGPT</h1>
-        </div>
-        <button class="menu-btn" onclick="toggleMenu()">⋮</button>
-        <div class="menu" id="menu">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="blog.html">Blog</a>
-            <a href="chatbots.html">Chatbots</a>
+            <h1>PhoenixGPT Blogs</h1>
         </div>
     </header>
 
-    <!-- Blog Section -->
+    <!-- Blog List -->
     <div class="blog-container" id="blog-container">
-        <h2>AI News and Updates</h2>
-        <!-- Blog posts will be dynamically loaded here -->
+        <h2>Latest Blogs</h2>
     </div>
 
-    <!-- Add Post Button -->
-    <a href="author.html" class="add-post-btn">+</a>
+    <!-- + Button to Navigate to Author Page -->
+    <button class="add-button" onclick="location.href='author.html'">+</button>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 PhoenixGPT </p>
-    </footer>
-
-    <!-- JavaScript for Menu and Blog -->
     <script type="module">
-        function toggleMenu() {
-            var menu = document.getElementById("menu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
+        import { db } from "./firebase.js";
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        async function loadBlogs() {
+            const blogContainer = document.getElementById("blog-container");
+            blogContainer.innerHTML = "<h2>Latest Blogs</h2>";
+
+            const querySnapshot = await getDocs(collection(db, "blogs"));
+            querySnapshot.forEach((doc) => {
+                const blogData = doc.data();
+                const blogElement = document.createElement("div");
+                blogElement.classList.add("blog-post");
+                blogElement.innerHTML = `
+                    <h2 onclick="toggleContent(this)">${blogData.title}</h2>
+                    <p class="blog-content">${blogData.content}</p>
+                `;
+                blogContainer.appendChild(blogElement);
+            });
         }
 
-        document.addEventListener("click", function(event) {
-            var menu = document.getElementById("menu");
-            var button = document.querySelector(".menu-btn");
-            if (event.target !== menu && event.target !== button) {
-                menu.style.display = "none";
-            }
-        });
+        // Function to toggle blog content visibility
+        window.toggleContent = function(element) {
+            const content = element.nextElementSibling;
+            content.style.display = content.style.display === "block" ? "none" : "block";
+        };
+
+        // Load blogs when the page loads
+        loadBlogs();
     </script>
+
 </body>
 </html>
+
 
 
 
