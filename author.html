@@ -104,13 +104,17 @@
         function signIn() {
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
+            console.log("Attempting login for", email);
+            
             signInWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
+                    console.log("Login successful", userCredential);
                     document.getElementById("auth-message").innerText = "Login successful!";
                     document.getElementById("auth-container").style.display = "none";
                     document.getElementById("blog-form").style.display = "block";
                 })
                 .catch((error) => {
+                    console.error("Login failed", error);
                     document.getElementById("auth-message").innerText = "Login failed: " + error.message;
                 });
         }
@@ -119,6 +123,7 @@
             const title = document.getElementById("blog-title").value;
             const content = document.getElementById("blog-content").value;
             if (title && content) {
+                console.log("Posting blog:", title);
                 await addDoc(collection(db, "blogs"), {
                     title: title,
                     content: content,
