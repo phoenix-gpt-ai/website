@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog - PhoenixGPT</title>
     <link rel="icon" type="image/png" href="PhoenixGPT logo.jpeg">
+    <script type="module" src="firebase.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -134,6 +135,16 @@
         </div>
     </header>
 
+    <!-- Login Section -->
+    <div id="login-section">
+        <input type="email" id="email" placeholder="Enter Email">
+        <input type="password" id="password" placeholder="Enter Password">
+        <button onclick="login()">Login</button>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <p id="login-status"></p>
+
     <!-- Blog Section -->
     <div class="blog-container" id="blog-container">
         <h2>AI News and Updates</h2>
@@ -149,14 +160,12 @@
     </footer>
 
     <!-- JavaScript for Menu and Blog -->
-    <script>
+    <script type="module">
+        import { auth, signInWithEmailAndPassword, signOut } from "./firebase.js";
+
         function toggleMenu() {
             var menu = document.getElementById("menu");
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
-            }
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
 
         document.addEventListener("click", function(event) {
@@ -171,25 +180,21 @@
             window.location.href = "author.html";
         }
 
-        function loadBlogs() {
-            fetch("get_blogs.php")
-                .then(response => response.json())
-                .then(data => {
-                    const blogContainer = document.getElementById("blog-container");
-                    blogContainer.innerHTML = '<h2>AI News and Updates</h2>';
-                    data.forEach(post => {
-                        let postElement = document.createElement("div");
-                        postElement.classList.add("blog-post");
-                        postElement.innerHTML = `<h2>${post.title}</h2><p>${post.content}</p>`;
-                        postElement.addEventListener("click", function() {
-                            postElement.classList.toggle("expanded");
-                        });
-                        blogContainer.appendChild(postElement);
-                    });
-                });
+        async function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                document.getElementById("login-status").innerText = "Logged in successfully!";
+            } catch (error) {
+                document.getElementById("login-status").innerText = "Login failed: " + error.message;
+            }
         }
 
-        loadBlogs();
+        async function logout() {
+            await signOut(auth);
+            document.getElementById("login-status").innerText = "Logged out!";
+        }
     </script>
 </body>
 </html>
