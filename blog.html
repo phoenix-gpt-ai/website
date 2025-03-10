@@ -116,7 +116,7 @@
             <h1>PhoenixGPT Blogs</h1>
         </div>
         <div class="menu-container">
-            <button class="menu-btn" onclick=toggleMenu()>⋮</button>
+            <button class="menu-btn" onclick="toggleMenu()">⋮</button>
             <div class="menu" id="menu">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
@@ -179,16 +179,19 @@
 
         // Function to toggle the menu visibility
         function toggleMenu() {
-            const menu = document.getElementById("menu");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
+            var menu = document.getElementById("menu");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
         }
 
         // Close menu when clicking outside
         document.addEventListener("click", function(event) {
-            const menu = document.getElementById("menu");
-            const menuButton = document.querySelector(".menu-btn");
+            var menu = document.getElementById("menu");
+            var menuButton = document.querySelector(".menu-btn");
 
-            // If the click is outside menu & button, close the menu
             if (!menu.contains(event.target) && event.target !== menuButton) {
                 menu.style.display = "none";
             }
@@ -200,6 +203,7 @@
 
 </body>
 </html>
+
 
 
 
