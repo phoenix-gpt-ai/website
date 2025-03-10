@@ -178,21 +178,19 @@
         };
 
         // Function to toggle the menu visibility
-        function toggleMenu() {
+          function toggleMenu() {
             var menu = document.getElementById("menu");
             if (menu.style.display === "block") {
                 menu.style.display = "none";
             } else {
                 menu.style.display = "block";
             }
-        };
+        }
 
-        // Close menu when clicking outside
         document.addEventListener("click", function(event) {
             var menu = document.getElementById("menu");
-            var menuButton = document.querySelector(".menu-btn");
-
-            if (!menu.contains(event.target) && event.target !== menuButton) {
+            var button = document.querySelector(".menu-btn");
+            if (event.target !== menu && event.target !== button) {
                 menu.style.display = "none";
             }
         });
