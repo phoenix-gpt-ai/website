@@ -117,7 +117,7 @@
             <h1>PhoenixGPT Blogs</h1>
         </div>
         <div class="menu">
-            <button class="menu-button" onclick="toggleMenu()">☰</button>
+            <button class="menu-button" onclick="toggleMenu()">⋮</button>
             <div class="menu-dropdown" id="menu-dropdown">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
@@ -146,7 +146,7 @@
             const querySnapshot = await getDocs(collection(db, "blogs"));
             querySnapshot.forEach((doc) => {
                 const blogData = doc.data();
-                const blogId = doc.id; // Get Firestore document ID
+                const blogId = doc.id;
                 
                 const blogElement = document.createElement("div");
                 blogElement.classList.add("blog-post");
@@ -157,7 +157,6 @@
                 blogContainer.appendChild(blogElement);
             });
 
-            // Check if a specific blog ID is in the URL
             const urlParams = new URLSearchParams(window.location.search);
             const blogIdFromURL = urlParams.get("blog");
             if (blogIdFromURL) {
@@ -174,7 +173,6 @@
             content.style.display = isExpanded ? "none" : "block";
 
             if (!fromURL) {
-                // Update the URL without reloading the page
                 const newURL = isExpanded ? "blog.html" : `blog.html?blog=${blogId}`;
                 history.pushState(null, "", newURL);
             }
@@ -183,13 +181,18 @@
         // Function to toggle the menu visibility
         function toggleMenu() {
             const menu = document.getElementById("menu-dropdown");
-            menu.style.display = menu.style.display === "block" ? "none" : "block";
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
         }
 
         // Close menu when clicking outside
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("menu-dropdown");
-            if (!event.target.closest(".menu")) {
+            const menuButton = document.querySelector(".menu-button");
+            if (!menu.contains(event.target) && event.target !== menuButton) {
                 menu.style.display = "none";
             }
         });
@@ -200,6 +203,7 @@
 
 </body>
 </html>
+
 
 
 
