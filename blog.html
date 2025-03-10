@@ -37,35 +37,34 @@
             font-size: 24px;
         }
         
-        /* Navigation Menu */
-        .menu {
-            position: relative;
-        }
-        .menu-button {
+        /* Menu Button */
+        .menu-btn {
             background: none;
             border: none;
             font-size: 24px;
             cursor: pointer;
             color: white;
         }
-        .menu-dropdown {
+
+        /* Menu Dropdown */
+        .menu {
             display: none;
             position: absolute;
             top: 40px;
-            right: 0;
+            right: 10px;
             background-color: white;
             color: black;
             padding: 10px;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        .menu-dropdown a {
+        .menu a {
             display: block;
             padding: 5px 10px;
             color: black;
             text-decoration: none;
         }
-        .menu-dropdown a:hover {
+        .menu a:hover {
             background-color: #ff6600;
             color: white;
         }
@@ -116,9 +115,9 @@
             <img src="PhoenixGPT logo.jpeg">
             <h1>PhoenixGPT Blogs</h1>
         </div>
-        <div class="menu">
-            <button class="menu-button" onclick="toggleMenu()">⋮</button>
-            <div class="menu-dropdown" id="menu-dropdown">
+        <div class="menu-container">
+            <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+            <div class="menu" id="menu">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
                 <a href="blog.html">Blog</a>
@@ -180,18 +179,16 @@
 
         // Function to toggle the menu visibility
         function toggleMenu() {
-            const menu = document.getElementById("menu-dropdown");
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
-            }
+            const menu = document.getElementById("menu");
+            menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
 
         // Close menu when clicking outside
         document.addEventListener("click", function(event) {
-            const menu = document.getElementById("menu-dropdown");
-            const menuButton = document.querySelector(".menu-button");
+            const menu = document.getElementById("menu");
+            const menuButton = document.querySelector(".menu-btn");
+
+            // If the click is outside menu & button, close the menu
             if (!menu.contains(event.target) && event.target !== menuButton) {
                 menu.style.display = "none";
             }
@@ -203,6 +200,7 @@
 
 </body>
 </html>
+
 
 
 
