@@ -144,19 +144,28 @@
             blogContainer.innerHTML = "<h2>Latest Blogs</h2>";
 
             const querySnapshot = await getDocs(collection(db, "blogs"));
+            const blogs = [];
+
+            // Store blog data
             querySnapshot.forEach((doc) => {
-                const blogData = doc.data();
-                const blogId = doc.id;
-                
+                blogs.push({ id: doc.id, data: doc.data() });
+            });
+
+            // Reverse order so latest comes first
+            blogs.reverse();
+
+            // Display blogs
+            blogs.forEach((blog) => {
                 const blogElement = document.createElement("div");
                 blogElement.classList.add("blog-post");
                 blogElement.innerHTML = `
-                    <h2 onclick="toggleContent('${blogId}')">${blogData.title}</h2>
-                    <p class="blog-content" id="content-${blogId}" style="display: none;">${blogData.content}</p>
+                    <h2 onclick="toggleContent('${blog.id}')">${blog.data.title}</h2>
+                    <p class="blog-content" id="content-${blog.id}" style="display: none;">${blog.data.content}</p>
                 `;
                 blogContainer.appendChild(blogElement);
             });
 
+            // Expand a blog if URL has a blog ID
             const urlParams = new URLSearchParams(window.location.search);
             const blogIdFromURL = urlParams.get("blog");
             if (blogIdFromURL) {
@@ -177,11 +186,14 @@
                 history.pushState(null, "", newURL);
             }
         };
+
+        // Load blogs when the page loads
         loadBlogs();
     </script>
+
     <script>
         // Function to toggle the menu visibility
-          function toggleMenu() {
+        function toggleMenu() {
             var menu = document.getElementById("menu");
             if (menu.style.display === "block") {
                 menu.style.display = "none";
@@ -190,6 +202,7 @@
             }
         }
 
+        // Hide menu when clicking outside
         document.addEventListener("click", function(event) {
             var menu = document.getElementById("menu");
             var button = document.querySelector(".menu-btn");
@@ -198,12 +211,11 @@
             }
         });
 
-        // Load blogs when the page loads
-    
     </script>
 
 </body>
 </html>
+
 
 
 
