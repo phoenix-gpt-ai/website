@@ -1,12 +1,17 @@
 npm i @vercel/analytics
-import { Analytics } from "@vercel/analytics/react";
-
-export default function MyApp({ Component, pageProps }) {
+import { Analytics } from '@vercel/analytics/next';
+ 
+export default function RootLayout({ children }) {
   return (
-    <>
-      <Component {...pageProps} />
-      <Analytics />
-    </>
+    <html lang="en">
+      <head>
+        <title>Next.js</title>
+      </head>
+      <body>
+        {children}
+        <Analytics />
+      </body>
+    </html>
   );
 }
 
