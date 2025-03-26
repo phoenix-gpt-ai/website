@@ -5,7 +5,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBaCdBvPxZDNEDVtE1_Q_6cCHVtwlpikLk",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "phoenixgpt-3fce9.firebaseapp.com",
   projectId: "phoenixgpt-3fce9",
   storageBucket: "phoenixgpt-3fce9.appspot.com",
