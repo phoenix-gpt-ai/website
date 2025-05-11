@@ -219,10 +219,12 @@
                 menu.style.display = "none";
             }
         });
-         document.addEventListener('contextmenu', (e) => {
-        e.preventDefault();
-      });
-    });
+        document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+  });
+});
+
 
     </script>
 
