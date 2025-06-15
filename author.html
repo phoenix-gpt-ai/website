@@ -123,7 +123,7 @@
         document.getElementById("postBtn").addEventListener("click", async function() {
             const title = document.getElementById("blog-title").value;
             const content = document.getElementById("blog-content").value;
-            const content = document.getElementById("blog-author").value;
+            const author = document.getElementById("blog-author").value;
             if (title && content && author) {
                 console.log("Posting blog:", title);
                 await addDoc(collection(db, "blogs"), {
