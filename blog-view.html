@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>View Blog - PhoenixGPT</title>
+  <link rel="icon" href="PhoenixGPT logo.jpeg" type="image/png" />
+  <script type="module" src="firebase.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #0f1d57;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      text-decoration: none;
+      background-color: #ff6600;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+    }
+
+    .back-btn:hover {
+      background-color: #e65500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="blogContainer">
+    <p>Loading blog...</p>
+  </div>
+
+  <script type="module">
+    import { db } from "./firebase.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const blogContainer = document.getElementById("blogContainer");
+    const params = new URLSearchParams(window.location.search);
+    const blogId = params.get("blog");
+
+    if (!blogId) {
+      blogContainer.innerHTML = "<p>Invalid blog ID.</p>";
+    } else {
+      const blogRef = doc(db, "blogs", blogId);
+      getDoc(blogRef).then((docSnap) => {
+        if (docSnap.exists()) {
+          const blog = docSnap.data();
+          const date = blog.timestamp?.toDate ? blog.timestamp.toDate().toLocaleString() : "Unknown Date";
+
+          blogContainer.innerHTML = `
+            <h1>${blog.title}</h1>
+            <p class="meta">Posted on ${date}${blog.author ? ` by ${blog.author}` : ''}</p>
+            <div class="content">${blog.content}</div>
+            <a href="blog.html" class="back-btn">← Back to Blogs</a>
+          `;
+        } else {
+          blogContainer.innerHTML = "<p>Blog not found.</p>";
+        }
+      }).catch((err) => {
+        blogContainer.innerHTML = "<p>Error loading blog.</p>";
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>
