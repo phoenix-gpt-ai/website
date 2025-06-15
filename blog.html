@@ -161,7 +161,7 @@
             });
 
             // Reverse order so latest comes first
-           
+           blogs.sort((a, b) => b.data.timestamp - a.data.timestamp);
 
             // Display blogs
             blogs.forEach((blog) => {
