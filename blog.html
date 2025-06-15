@@ -164,15 +164,20 @@
            blogs.sort((a, b) => b.data.timestamp - a.data.timestamp);
 
             // Display blogs
-            blogs.forEach((blog) => {
-                const blogElement = document.createElement("div");
-                blogElement.classList.add("blog-post");
-                blogElement.innerHTML = `
-                    <h2 onclick="toggleContent('${blog.id}')">${blog.data.title}</h2>
-                    <p class="blog-content" id="content-${blog.id}" style="display: none;">${blog.data.content}</p>
-                `;
-                blogContainer.appendChild(blogElement);
-            });
+           // Display blogs
+blogs.forEach((blog) => {
+    const blogElement = document.createElement("div");
+    blogElement.classList.add("blog-post");
+    blogElement.innerHTML = `
+        <h2>
+            <a href="blog-view.html?blog=${blog.id}" style="text-decoration: none; color: black;">
+                ${blog.data.title}
+            </a>
+        </h2>
+    `;
+    blogContainer.appendChild(blogElement);
+});
+
 
             // Expand a blog if URL has a blog ID
             const urlParams = new URLSearchParams(window.location.search);
