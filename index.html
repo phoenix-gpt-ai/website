@@ -400,20 +400,49 @@
             z-index: 2;
         }
 
+        .updates-section h3 {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            margin: 15px 0 10px 0;
+            position: relative;
+            z-index: 2;
+        }
+
         .updates-section p {
             font-size: 1.2rem;
             position: relative;
             z-index: 2;
+            margin-bottom: 10px;
+        }
+
+        .updates-section img {
+            width: 200px;
+            height: 130px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px solid rgba(255, 102, 0, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            object-fit: cover;
+        }
+
+        .updates-section img:hover {
+            transform: scale(1.05);
+            border-color: #ff6600;
+            box-shadow: 0 8px 25px rgba(255, 102, 0, 0.4);
         }
 
         .updates-section a {
             color: #ffcc00;
             text-decoration: none;
             font-weight: 600;
-            padding: 5px 15px;
+            padding: 8px 20px;
             border-radius: 20px;
             background: rgba(255, 102, 0, 0.2);
             transition: all 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
         }
 
         .updates-section a:hover {
@@ -469,8 +498,26 @@
                 display: block;
             }
 
+            .logo h1 {
+                font-size: 22px;
+            }
+
+            .logo img {
+                width: 40px;
+                height: 40px;
+            }
+
             .hero h2 {
                 font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
             }
 
             .ai-chatbot-grid {
@@ -480,6 +527,90 @@
 
             .card {
                 padding: 30px 20px;
+            }
+
+            .card h2 {
+                font-size: 1.5rem;
+            }
+
+            .card p {
+                font-size: 1rem;
+            }
+
+            .updates-section {
+                padding: 30px 20px;
+            }
+
+            .updates-section h2 {
+                font-size: 1.8rem;
+            }
+
+            .updates-section h3 {
+                font-size: 1.3rem;
+            }
+
+            .updates-section p {
+                font-size: 1rem;
+            }
+
+            .updates-section img {
+                width: 160px;
+                height: 100px;
+            }
+
+            .main-content {
+                padding: 60px 15px;
+            }
+
+            .section {
+                margin-bottom: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                padding: 0 10px;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-content {
+                padding: 0 15px;
+            }
+
+            .updates-section {
+                padding: 25px 15px;
+            }
+
+            .updates-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .updates-section h3 {
+                font-size: 1.2rem;
+            }
+
+            .updates-section p {
+                font-size: 0.95rem;
+            }
+
+            .updates-section img {
+                width: 140px;
+                height: 90px;
+            }
+
+            .card {
+                padding: 25px 15px;
+            }
+
+            .main-content {
+                padding: 50px 10px;
             }
         }
 
@@ -555,14 +686,11 @@
     <main class="main-content" id="main-content">
          <div class="updates-section section">
             <h2>🔥 Latest Updates</h2>
-               
-    
-      <img src="phoenix.png" alt="Phoenix Chatbot">
-      <h3>Phoenix</h3>
-      <p>Your intelligent AI assistant powered by advanced language models.</p>
-      <p>Ask questions, get help, and interact smartly with Phoenix today.</p>
-      <p>                                                                 </p>
-       <p><a href="https://phoenix.phoenixgpt.co.in">Try Phoenix →</a></p>
+            <img src="phoenix.png" alt="Phoenix Chatbot">
+            <h3>Phoenix</h3>
+            <p>Your intelligent AI assistant powered by advanced language models.</p>
+            <p>Ask questions, get help, and interact smartly with Phoenix today.</p>
+            <p><a href="https://phoenix.phoenixgpt.co.in">Try Phoenix →</a></p>
         </div>
         
         <div class="ai-chatbot-grid section">
@@ -587,8 +715,6 @@
                 <p>Master AI implementation with expert guidance on effective prompting, tool selection, and best practices.</p>
             </div>
         </div>
-
-       
     </main>
 
     <!-- Footer -->
