@@ -400,7 +400,7 @@
             transform: scale(1.05);
         }
 
-        /* Team PDF Section */
+        /* Team PDF Section - FIXED */
         .team-section {
             background: rgba(255, 102, 0, 0.05);
             border-radius: 20px;
@@ -452,16 +452,18 @@
             z-index: 1;
         }
 
+        /* FIXED: Proper width calculation for 7 pages */
         .team-pages-container {
             display: flex;
             height: 100%;
-            width: 700%; /* 7 pages × 100% */
+            width: 700%; /* 7 pages × 100% each */
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             touch-action: pan-x;
         }
 
+        /* FIXED: Each page takes exactly 1/7 of the container width */
         .team-page {
-            width: calc(100% / 7); /* Each page takes 1/7 of total width */
+            width: calc(100% / 7); /* Each page is 1/7 of total container width */
             height: 100%;
             display: flex;
             align-items: center;
@@ -469,7 +471,7 @@
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             position: relative;
             overflow: hidden;
-            flex-shrink: 0;
+            flex-shrink: 0; /* Prevent pages from shrinking */
         }
 
         .team-page::before {
@@ -932,12 +934,29 @@
             </div>
         </div>
 
-        <!-- Team Section with Custom Page Viewer -->
+        <!-- Team Section with Custom Page Viewer - FIXED -->
         <div class="team-section section">
             <h2>👥 Meet Our Phoenix Team</h2>
             <div class="pdf-container">
                 <div class="team-viewer" id="teamViewer">
                     <div class="team-pages-container" id="teamPagesContainer">
+                        <!-- Page 1: Title Page -->
+                        <div class="team-page">
+                            <div class="page-content">
+                                <div class="page-title">Meet the Team</div>
+                                <div class="team-member">
+                                    <div style="font-size: 1.5rem; color: #ff6600; font-weight: 700; margin-bottom: 20px;">
+                                        Welcome to PhoenixGPT
+                                    </div>
+                                    <div style="font-size: 1.1rem; color: #666; line-height: 1.6;">
+                                        Discover the brilliant minds behind our AI revolution. 
+                                        Use navigation buttons or swipe to meet our talented team members.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swipe-hint">← Navigate to explore our team →</div>
+                        </div>
+
                         <!-- Page 2: Akshay Pratap Singh -->
                         <div class="team-page">
                             <div class="page-content">
@@ -968,16 +987,16 @@
                             </div>
                         </div>
 
-                        <!-- Page 4: Anshika Singh -->
+                        <!-- Page 4: Anshika Singh (Graphic Designer) -->
                         <div class="team-page">
                             <div class="page-content">
                                 <div class="page-title">Graphic Designer</div>
                                 <div class="team-member">
                                     <img src="images/2.jpg" alt="Anshika Singh" class="member-image">
                                     <div class="member-name">Anshika Singh</div>
-                                    <div class="member-role">Graphic Designer & Content Head</div>
+                                    <div class="member-role">Graphic Designer</div>
                                     <div style="font-size: 1rem; color: #666; margin-top: 15px; line-height: 1.6;">
-                                        Creative designer crafting stunning visuals and leading content strategy.
+                                        Creative designer crafting stunning visuals and brand identity for PhoenixGPT.
                                     </div>
                                 </div>
                             </div>
@@ -1121,7 +1140,7 @@
             });
         }
 
-        // Team page navigation
+        // FIXED: Team page navigation
         let currentTeamPage = 0;
         const totalTeamPages = 7;
 
@@ -1146,6 +1165,7 @@
             }
         }
 
+        // FIXED: Proper transform calculation
         function updateTeamPage() {
             const container = document.getElementById('teamPagesContainer');
             const pageInfo = document.getElementById('teamPageInfo');
@@ -1153,8 +1173,8 @@
             const nextBtn = document.getElementById('nextTeamBtn');
             const dots = document.querySelectorAll('.page-dot');
             
-            // Move container
-            const translateX = -currentTeamPage * 100;
+            // FIXED: Each page is 1/7 of container width, so move by (100/7)% per page
+            const translateX = -(currentTeamPage * (100 / 7));
             container.style.transform = `translateX(${translateX}%)`;
             
             // Update page info
@@ -1185,7 +1205,7 @@
             viewer.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
                 isDragging = true;
-                initialTransform = -currentTeamPage * 100;
+                initialTransform = -(currentTeamPage * (100 / 7));
             });
 
             viewer.addEventListener('touchmove', (e) => {
@@ -1196,7 +1216,7 @@
                 const diffX = currentX - startX;
                 const container = document.getElementById('teamPagesContainer');
                 const viewerWidth = viewer.offsetWidth;
-                const movePercent = (diffX / viewerWidth) * 100;
+                const movePercent = (diffX / viewerWidth) * (100 / 7); // Adjusted for 7 pages
                 
                 container.style.transform = `translateX(${initialTransform + movePercent}%)`;
             });
@@ -1227,7 +1247,7 @@
             viewer.addEventListener('mousedown', (e) => {
                 startX = e.clientX;
                 isMouseDown = true;
-                initialTransform = -currentTeamPage * 100;
+                initialTransform = -(currentTeamPage * (100 / 7));
                 viewer.style.cursor = 'grabbing';
             });
 
@@ -1239,7 +1259,7 @@
                 const diffX = currentX - startX;
                 const container = document.getElementById('teamPagesContainer');
                 const viewerWidth = viewer.offsetWidth;
-                const movePercent = (diffX / viewerWidth) * 100;
+                const movePercent = (diffX / viewerWidth) * (100 / 7); // Adjusted for 7 pages
                 
                 container.style.transform = `translateX(${initialTransform + movePercent}%)`;
             });
