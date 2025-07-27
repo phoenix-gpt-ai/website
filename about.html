@@ -408,6 +408,7 @@
             margin-bottom: 60px;
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
 
         .team-section h2 {
@@ -448,17 +449,19 @@
             border-radius: 10px;
             background: white;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 1;
         }
 
         .team-pages-container {
             display: flex;
             height: 100%;
+            width: 700%; /* 7 pages × 100% */
             transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             touch-action: pan-x;
         }
 
         .team-page {
-            min-width: 100%;
+            width: calc(100% / 7); /* Each page takes 1/7 of total width */
             height: 100%;
             display: flex;
             align-items: center;
@@ -466,6 +469,7 @@
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             position: relative;
             overflow: hidden;
+            flex-shrink: 0;
         }
 
         .team-page::before {
@@ -527,6 +531,24 @@
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .member-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px auto;
+            display: block;
+            border: 3px solid rgba(255, 102, 0, 0.3);
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .member-image:hover {
+            transform: scale(1.1);
+            border-color: #ff6600;
+            box-shadow: 0 10px 25px rgba(255, 102, 0, 0.4);
         }
 
         .social-link {
@@ -916,78 +938,91 @@
             <div class="pdf-container">
                 <div class="team-viewer" id="teamViewer">
                     <div class="team-pages-container" id="teamPagesContainer">
-                        <!-- Page 1: Title Page -->
+                        <!-- Page 2: Akshay Pratap Singh -->
                         <div class="team-page">
                             <div class="page-content">
-                                <div class="page-title">Meet the Team</div>
+                                <div class="page-title">Founder & CEO</div>
                                 <div class="team-member">
-                                    <div style="font-size: 1.5rem; color: #ff6600; font-weight: 700; margin-bottom: 20px;">
-                                        Welcome to PhoenixGPT
-                                    </div>
-                                    <div style="font-size: 1.1rem; color: #666; line-height: 1.6;">
-                                        Discover the brilliant minds behind our AI revolution. 
-                                        Swipe or use navigation to meet our talented team members.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="swipe-hint">← Swipe to explore our team →</div>
-                        </div>
-
-                        <!-- Page 2: Founder -->
-                        <div class="team-page">
-                            <div class="page-content">
-                                <div class="page-title">Leadership</div>
-                                <div class="team-member">
+                                    <img src="images/7.jpg" alt="Akshay Pratap Singh" class="member-image">
                                     <div class="member-name">Akshay Pratap Singh</div>
                                     <div class="member-role">Founder & CEO</div>
-                                    <a href="#" class="social-link">Find us on LinkedIn</a>
+                                    <div style="font-size: 1rem; color: #666; margin-top: 15px; line-height: 1.6;">
+                                        Visionary leader driving AI innovation and ethical technology development at PhoenixGPT.
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Page 3: Management -->
+                        <!-- Page 3: Aditya Singh -->
                         <div class="team-page">
                             <div class="page-content">
-                                <div class="page-title">Management</div>
+                                <div class="page-title">HR Manager</div>
                                 <div class="team-member">
+                                    <img src="images/5.jpg" alt="Aditya Singh" class="member-image">
                                     <div class="member-name">Aditya Singh</div>
                                     <div class="member-role">HR Manager</div>
-                                    <a href="#" class="social-link">Find us on LinkedIn</a>
+                                    <div style="font-size: 1rem; color: #666; margin-top: 15px; line-height: 1.6;">
+                                        Building exceptional teams and fostering a culture of innovation and growth.
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Page 4: Design & Research -->
+                        <!-- Page 4: Anshika Singh -->
                         <div class="team-page">
                             <div class="page-content">
-                                <div class="page-title">Design & Research</div>
+                                <div class="page-title">Graphic Designer</div>
                                 <div class="team-member">
+                                    <img src="images/2.jpg" alt="Anshika Singh" class="member-image">
                                     <div class="member-name">Anshika Singh</div>
-                                    <div class="member-role">Graphic Designer</div>
-                                    <a href="#" class="social-link">Find us on LinkedIn</a>
+                                    <div class="member-role">Graphic Designer & Content Head</div>
+                                    <div style="font-size: 1rem; color: #666; margin-top: 15px; line-height: 1.6;">
+                                        Creative designer crafting stunning visuals and leading content strategy.
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Page 5: Abhinav Kr. Srivastava -->
+                        <div class="team-page">
+                            <div class="page-content">
+                                <div class="page-title">Research Head</div>
                                 <div class="team-member">
+                                    <img src="images/6.jpg" alt="Abhinav Kr. Srivastava" class="member-image">
                                     <div class="member-name">Abhinav Kr. Srivastava</div>
                                     <div class="member-role">Research Head</div>
-                                    <a href="#" class="social-link">Find us on LinkedIn</a>
+                                    <div style="font-size: 1rem; color: #666; margin-top: 15px; line-height: 1.6;">
+                                        Leading cutting-edge AI research and developing innovative solutions.
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Page 5: Content Team -->
+                        <!-- Page 6: Aditi Chaturvedi -->
                         <div class="team-page">
                             <div class="page-content">
-                                <div class="page-title">Content Heads</div>
-                                <div class="content-heads-grid">
-                                    <div class="team-member">
-                                        <div class="member-name">Anshika Singh</div>
-                                        <div class="member-role">Content Head</div>
-                                        <a href="#" class="social-link">Find us on LinkedIn</a>
+                                <div class="page-title">Content Head</div>
+                                <div class="team-member">
+                                    <img src="images/3.jpg" alt="Aditi Chaturvedi" class="member-image">
+                                    <div class="member-name">Aditi Chaturvedi</div>
+                                    <div class="member-role">Content Head</div>
+                                    <div style="font-size: 1rem; color: #666; margin-top: 15px; line-height: 1.6;">
+                                        Creating compelling content and driving digital storytelling strategies.
                                     </div>
-                                    <div class="team-member">
-                                        <div class="member-name">Aditi Chaturvedi</div>
-                                        <div class="member-role">Content Head</div>
-                                        <a href="#" class="social-link">Find us on LinkedIn</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Page 7: Anshika Singh (Content Head) -->
+                        <div class="team-page">
+                            <div class="page-content">
+                                <div class="page-title">Content Head</div>
+                                <div class="team-member">
+                                    <img src="images/2.jpg" alt="Anshika Singh" class="member-image">
+                                    <div class="member-name">Anshika Singh</div>
+                                    <div class="member-role">Content Head</div>
+                                    <div style="font-size: 1rem; color: #666; margin-top: 15px; line-height: 1.6;">
+                                        Leading content strategy while combining creative design expertise with strategic content development.
                                     </div>
                                 </div>
                             </div>
@@ -1002,8 +1037,10 @@
                         <div class="page-dot" onclick="goToTeamPage(2)"></div>
                         <div class="page-dot" onclick="goToTeamPage(3)"></div>
                         <div class="page-dot" onclick="goToTeamPage(4)"></div>
+                        <div class="page-dot" onclick="goToTeamPage(5)"></div>
+                        <div class="page-dot" onclick="goToTeamPage(6)"></div>
                     </div>
-                    <div class="page-info" id="teamPageInfo">Page 1 of 5</div>
+                    <div class="page-info" id="teamPageInfo">Page 1 of 7</div>
                     <button class="team-nav-btn" id="nextTeamBtn" onclick="nextTeamPage()">Next →</button>
                 </div>
             </div>
@@ -1086,7 +1123,7 @@
 
         // Team page navigation
         let currentTeamPage = 0;
-        const totalTeamPages = 5;
+        const totalTeamPages = 7;
 
         function nextTeamPage() {
             if (currentTeamPage < totalTeamPages - 1) {
