@@ -391,12 +391,160 @@
             transition: all 0.3s ease;
             display: inline-block;
             margin-top: 15px;
+            cursor: pointer;
         }
 
         .service-item a:hover {
             color: white;
             background: #ff6600;
             transform: scale(1.05);
+        }
+
+        /* PDF Viewer Modal */
+        .pdf-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            backdrop-filter: blur(10px);
+        }
+
+        .pdf-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pdf-container {
+            width: 90%;
+            height: 90%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 102, 0, 0.3);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .pdf-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background: rgba(255, 102, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 102, 0, 0.3);
+        }
+
+        .pdf-title {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #ff6600;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 102, 0, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .pdf-viewer {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pdf-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: white;
+        }
+
+        .pdf-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(255, 102, 0, 0.1);
+            border-top: 1px solid rgba(255, 102, 0, 0.3);
+            gap: 20px;
+        }
+
+        .pdf-nav-btn {
+            background: rgba(255, 102, 0, 0.2);
+            border: 1px solid rgba(255, 102, 0, 0.5);
+            color: #ffcc00;
+            padding: 10px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .pdf-nav-btn:hover:not(:disabled) {
+            background: #ff6600;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .pdf-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            color: #ffcc00;
+            font-weight: 500;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            flex: 1;
+            max-width: 300px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            position: relative;
+            cursor: pointer;
+            margin: 0 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6600, #ffcc00);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -2px;
+            top: -2px;
+            width: 10px;
+            height: 10px;
+            background: #ffcc00;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
         }
 
         /* Contact section */
@@ -531,6 +679,21 @@
                 width: 100%;
                 max-width: 400px;
             }
+
+            .pdf-container {
+                width: 95%;
+                height: 95%;
+            }
+
+            .pdf-controls {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .progress-bar {
+                max-width: 200px;
+                margin: 10px 0;
+            }
         }
 
         /* Additional animations */
@@ -632,7 +795,7 @@
                 <div class="service-item">
                     <h3>👥 Meet Our Team</h3>
                     <p>Get to know the brilliant minds behind PhoenixGPT and our mission to create ethical AI solutions.</p>
-                    <a href="Tallow Sans Pen(3).pdf" target="_blank">Meet the Phoenix Team</a>
+                    <a onclick="openPDFViewer()">Meet the Phoenix Team</a>
                 </div>
                 
                 <div class="service-item">
@@ -666,6 +829,27 @@
         </div>
     </main>
 
+    <!-- PDF Viewer Modal -->
+    <div class="pdf-modal" id="pdfModal">
+        <div class="pdf-container">
+            <div class="pdf-header">
+                <div class="pdf-title">Meet Our Phoenix Team</div>
+                <button class="close-btn" onclick="closePDFViewer()">&times;</button>
+            </div>
+            <div class="pdf-viewer">
+                <iframe class="pdf-frame" id="pdfFrame" src=""></iframe>
+            </div>
+            <div class="pdf-controls">
+                <button class="pdf-nav-btn" id="prevBtn" onclick="previousPage()">← Previous</button>
+                <div class="page-info" id="pageInfo">Page 1 of 1</div>
+                <div class="progress-bar" onclick="seekToPage(event)">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <button class="pdf-nav-btn" id="nextBtn" onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2025 PhoenixGPT - Shaping the Future of Ethical AI</p>
@@ -673,6 +857,11 @@
 
     <!-- JavaScript -->
     <script>
+        // PDF Viewer functionality
+        let currentPage = 1;
+        let totalPages = 1; // You'll need to set this based on your actual PDF
+        const pdfPath = "Tallow Sans Pen(3).pdf";
+
         // Create animated background particles
         function createParticles() {
             const bgAnimation = document.getElementById('bg-animation');
@@ -726,6 +915,80 @@
             menuBtn.style.transform = navMenu.classList.contains('active') ? 'rotate(90deg)' : 'rotate(0deg)';
         }
 
+        // PDF Viewer functions
+        function openPDFViewer() {
+            const modal = document.getElementById('pdfModal');
+            const frame = document.getElementById('pdfFrame');
+            
+            // Load the PDF with page navigation
+            frame.src = `${pdfPath}#page=${currentPage}&toolbar=0&navpanes=0`;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Set total pages (you may need to determine this dynamically)
+            totalPages = 5; // Update this with actual page count of your PDF
+            updatePageInfo();
+        }
+
+        function closePDFViewer() {
+            const modal = document.getElementById('pdfModal');
+            const frame = document.getElementById('pdfFrame');
+            
+            modal.classList.remove('active');
+            frame.src = '';
+            document.body.style.overflow = 'auto';
+            currentPage = 1;
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePDFPage();
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePDFPage();
+            }
+        }
+
+        function updatePDFPage() {
+            const frame = document.getElementById('pdfFrame');
+            frame.src = `${pdfPath}#page=${currentPage}&toolbar=0&navpanes=0`;
+            updatePageInfo();
+        }
+
+        function updatePageInfo() {
+            const pageInfo = document.getElementById('pageInfo');
+            const progressFill = document.getElementById('progressFill');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+            
+            // Update progress bar
+            const progress = (currentPage / totalPages) * 100;
+            progressFill.style.width = progress + '%';
+            
+            // Update button states
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+        }
+
+        function seekToPage(event) {
+            const progressBar = event.currentTarget;
+            const rect = progressBar.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const barWidth = rect.width;
+            const clickRatio = clickX / barWidth;
+            
+            const targetPage = Math.max(1, Math.min(totalPages, Math.round(clickRatio * totalPages)));
+            currentPage = targetPage;
+            updatePDFPage();
+        }
+
         // Initialize everything
         document.addEventListener('DOMContentLoaded', () => {
             createParticles();
@@ -733,6 +996,30 @@
             
             window.addEventListener('scroll', handleScroll);
             document.getElementById('menu-btn').addEventListener('click', toggleMobileMenu);
+            
+            // Close PDF modal when clicking outside
+            document.getElementById('pdfModal').addEventListener('click', (e) => {
+                if (e.target.id === 'pdfModal') {
+                    closePDFViewer();
+                }
+            });
+            
+            // Keyboard navigation for PDF
+            document.addEventListener('keydown', (e) => {
+                const modal = document.getElementById('pdfModal');
+                if (modal.classList.contains('active')) {
+                    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        previousPage();
+                    } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        nextPage();
+                    } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        closePDFViewer();
+                    }
+                }
+            });
             
             // Close mobile menu when clicking outside
             document.addEventListener('click', (e) => {
